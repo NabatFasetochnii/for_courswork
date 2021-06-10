@@ -21,7 +21,7 @@ warnings.simplefilter("ignore")
 
 
 def draw_my_annotate(ax, t):
-    ax.annotate('{:.3f}'.format(t), xy=(t, 1.009), xytext=(t, 0.973), va='center', ha='center',
+    ax.annotate('{:.3f}'.format(t), xy=(t, 1.011), xytext=(t, 0.98), va='center', ha='center',
                 arrowprops={'width': 0.1, 'headwidth': 0, 'linestyle': '-', 'color': 'g'},
                 fontsize=4)
 
@@ -131,7 +131,7 @@ def do_post_proc(Path2Data):
     ########################################################################
     #  Search bad frames
     bad_threshold = 0.25
-    print('Search bad frames, threshold =', bad_threshold)
+    # print('Search bad frames, threshold =', bad_threshold)
     diffs = [mag[:, 0] - np.nanmedian(mag[:, 0]) for mag in Mag]
     # plt.figure(figsize=(7, 7))
     # plt.plot(Time['JD'], diff)
@@ -242,7 +242,7 @@ def do_post_proc(Path2Data):
             Std = np.nanstd(Flux[item][:, 1:], 0) / (np.nanmedian(Flux[item][:, 1:], 0) * Merror[1:])
             if np.max(Std) > 2:
                 Index = np.argmax(Std) + 1
-                print('Delete star #', Index, ' with STD =', np.max(Std))
+                # print('Delete star #', Index, ' with STD =', np.max(Std))
                 Flux[item] = np.delete(Flux[item], Index, axis=1)
                 SN[item] = np.delete(SN[item], Index, axis=1)
                 Mag[item] = np.delete(Mag[item], Index, axis=1)
@@ -281,93 +281,6 @@ def do_post_proc(Path2Data):
     s_flux = [s_f[:, sort[num]] for num, s_f in enumerate(s_flux)]
     s_sn = [s_sn[:, sort[num]] for num, s_sn in enumerate(s_sn)]
     id_s = [id_s[num][sort] for num, sort in enumerate(sort)]
-    # _k = 0
-    # plt.plot(Time['JD'], Flux[:, 0] / np.median(Flux[:, 0]), 'r*', label='Target')
-    # for _i in range(0, len(Sort)):
-    #     if _k < 7:
-    #         plt.plot(Time['JD'], S_Flux[:, _i] - 0.05 * (_i + 1),
-    #                  '.', label='Ref#' + str(IDs[_i]))
-    #     _k = _k + 1
-    #
-    # plt.ylabel('Normalized flux', fontsize=6)
-    # plt.axvspan(T0.jd, T1.jd, facecolor='k', alpha=0.2)
-    # plt.xticks(locs, x_ticks_labels, rotation='vertical', fontsize=6)
-    # plt.xlabel('Date-Time (UTC), ' + Time['DATE-OBS'][0].split('T')[0], fontsize=6)
-    # plt.tick_params(axis='both', labelsize=6, direction='in')
-    # plt.legend()
-    # plt.title('Stars')
-    # plt.grid()
-    # plt.show()
-
-    ##
-    #  #plt.plot(np.median(S_Flux, axis=0), 1/np.median(S_SN, axis=0))
-    #  #plt.grid()
-    #  #plt.show()
-
-    #  plot flux vs airmass
-    # _k = 0
-    # plt.plot(Time['AIRMASS'], Flux[:, 0] / np.median(Flux[:, 0]), 'r*', label='Target')
-    #
-    # for _i in range(0, len(Sort)):
-    #     if _k < 7:
-    #         plt.plot(Time['AIRMASS'], S_Flux[:, _i] - 0.05 * (_i + 1),
-    #                  '.', label='Ref#' + str(IDs[_i]))
-    #     _k = _k + 1
-    #
-    # plt.ylabel('Normalized flux', fontsize=6)
-    # plt.tick_params(axis='both', labelsize=6, direction='in')
-    # plt.legend()
-    # plt.title('Flux vs airmass')
-    # plt.grid()
-    # plt.show()
-
-    #  ###plot flux vs sky
-    #  #k=0
-    #  #plt.plot(Time['Sky'], Flux[:, 0]/np.median(Flux[:, 0]), 'r*', label='Target')
-    #  #for i in range(0, len(Sort)):
-    #  #    if k<7:
-    #  #        plt.plot(Time['Sky'], S_Flux[:, i]-0.05*(i+1),\
-    #  #                 '.', label='Ref#'+str(IDs[i]))
-    #  #    k = k+1
-    #  #
-    #  #plt.ylabel('Normalized flux', fontsize=6)
-    #  #plt.tick_params(axis='both', labelsize=6, direction='in')
-    #  #plt.legend()
-    #  #plt.title('Flux vs Sky')
-    #  #plt.grid()
-    #  #plt.show()
-
-    #  ###plot flux vs FWHM
-    #  #k=0
-    #  #plt.plot(Time['FWHM'], Flux[:, 0]/np.median(Flux[:, 0]), 'r*', label='Target')
-    #  #for i in range(0, len(Sort)):
-    #  #    if k<7:
-    #  #        plt.plot(Time['FWHM'], S_Flux[:, i]-0.05*(i+1),\
-    #  #                 '.', label='Ref#'+str(IDs[i]))
-    #  #    k = k+1
-    #  #
-    #  #plt.ylabel('Normalized flux', fontsize=6)
-    #  #plt.tick_params(axis='both', labelsize=6, direction='in')
-    #  #plt.legend()
-    #  #plt.title('Flux vs FWHM')
-    #  #plt.grid()
-    #  #plt.show()
-
-    #  ###plot flux vs X and Y
-    #  #k=0
-    #  #plt.plot(Time['X_Shift'], Flux[:, 0]/np.median(Flux[:, 0]), 'r*', label='Target')
-    #  #for i in range(0, len(Sort)):
-    #  #    if k<7:
-    #  #        plt.plot(Time['X_Shift'], S_Flux[:, i]-0.05*(i+1),\
-    #  #                 '.', label='Ref#'+str(IDs[i]))
-    #  #    k = k+1
-    #  #
-    #  #plt.ylabel('Normalized flux', fontsize=6)
-    #  #plt.tick_params(axis='both', labelsize=6, direction='in')
-    #  #plt.legend()
-    #  #plt.title('Flux vs X_Shift')
-    #  #plt.grid()
-    #  #plt.show()
 
     ########################################################################
     #  start report
@@ -409,7 +322,7 @@ def do_post_proc(Path2Data):
         Target_Report_Tbl[item]['Rel_Flux_Err_Target'] = np.round(1 / SN[item][:, 0], 5)
 
         # fitting
-        model_params.append(do_fitting(Time[0]['JD'][0], Time[0]['JD'][-4], model, Target_Report_Tbl[item]['BJD_TDB'],
+        model_params.append(do_fitting(Time[0]['JD'][0], Time[0]['JD'][-1], model, Target_Report_Tbl[item]['BJD_TDB'],
                                        Target_Report_Tbl[item]['Rel_Flux_Target'],
                                        2.103193, (1 - Depth) * 1000, Fil))
         # f, k_model, a, mid_time, i_model, e, w, ldc1, ldc2, t1, t2, t0, t3 = \
@@ -491,31 +404,15 @@ def do_post_proc(Path2Data):
         for x in t:
             # print(str(round(x.tdb.jd - ZERO, 2)))
             x_ticks_labels.append(str('{:.2f}'.format(x.tdb.jd)))
-            # x_ticks_labels.append(str(x.tdb.jd).split(' ')[1].split('.')[0])
-        # x_ticks_labels.append(str('{:.2f}'.format(Target_Report_Tbl[num]['BJD_TDB'][t0] - ZERO)))
-        # x_ticks_labels.append(str('{:.2f}'.format(Target_Report_Tbl[num]['BJD_TDB'][t3] - ZERO)))
-
-        # axs[num].xticks([Target_Report_Tbl[num]['BJD_TDB'][t0] - ZERO, Target_Report_Tbl[num]['BJD_TDB'][t3] - ZERO],
-        #                 [str(Target_Report_Tbl[num]['BJD_TDB'][t0] - ZERO),
-        #                  str(Target_Report_Tbl[num]['BJD_TDB'][t3] - ZERO)])
         axs[num].set_xticklabels(x_ticks_labels, fontsize=5)  # rotation='vertical',
         axs[num].set_xlabel('BJD_TDB - ' + str(ZERO), fontsize=6)
 
         axs[num].axhline(Depth, linewidth=0.5, color='r')  # глубина транзита по изначальной информации
         axs[num].axhline(transit_depth_median[num], linewidth=0.5, color='g')  # глубина транзита по наблюдению
-        # axs[num].axvline(Target_Report_Tbl[num]['BJD_TDB'][t0] - ZERO,
-        #                  linewidth=0.5, color='g')  # начало транзита по наблюдению
         draw_my_annotate(axs[num], Target_Report_Tbl[num]['BJD_TDB'][t0] - ZERO)  # начало транзита по наблюдению
         draw_my_annotate(axs[num], Target_Report_Tbl[num]['BJD_TDB'][t1] - ZERO)  # дно1
         draw_my_annotate(axs[num], Target_Report_Tbl[num]['BJD_TDB'][t2] - ZERO)  # дно2
         draw_my_annotate(axs[num], Target_Report_Tbl[num]['BJD_TDB'][t3] - ZERO)  # конец транзита по наблюдению
-
-        # axs[num].axvline(Target_Report_Tbl[num]['BJD_TDB'][t1] - ZERO,
-        #                  linewidth=0.5, color='g')  # дно1
-        # axs[num].axvline(Target_Report_Tbl[num]['BJD_TDB'][t2] - ZERO,
-        #                  linewidth=0.5, color='g')  # дно2
-        # axs[num].axvline(Target_Report_Tbl[num]['BJD_TDB'][t3] - ZERO,
-        #                  linewidth=0.5, color='g')  # конец транзита по наблюдению
 
         axs[num].tick_params(axis='both', labelsize=6, direction='in')
         axs[num].set_title('Target, aperture radius - ' +
@@ -622,119 +519,7 @@ def do_post_proc(Path2Data):
                 overwrite=True, delimiter='\t', fast_writer=False,
                 format='commented_header')
 
-    # Target_Report_Txt = 'MASTER-Ural, 2x0.4m, 2xApogeeAltaU16m cameras, '
-    # Target_Report_Txt += 'observed a '
-    # Target_Report_Txt += Info['Name'][0] + ' at  '
-    # Target_Report_Txt += Time[0]['DATE-OBS'][0].split('T')[0] + ' in '
-    # Target_Report_Txt += Fil + ' filter '
-    # Target_Report_Txt += 'with exptime=' + '{:.1f}'.format(Exp) + 's.\n'
-    # Target_Report_Txt += '\n'
-    # Target_Report_Txt += 'Pixel scale = 1.85"/pix, mean FWHM of PSF is '
-    # Target_Report_Txt += '{:.1f}'.format(np.mean(Time[0]['FWHM']) * 1.85) + '". '
-    # Target_Report_Txt += 'Photometric aperture radius: ' + 'r1 = ' + str(Time[0]['APER1'][0]) \
-    #                      + ' pix = ' + '{:.1f}'.format(Time[0]['APER1'][0] * 1.85) + '", '
-    # Target_Report_Txt += 'r2 = ' + str(Time[0]['APER2'][0]) \
-    #                      + ' pix = ' + '{:.1f}'.format(Time[0]['APER2'][0] * 1.85) + '", '
-    # Target_Report_Txt += 'r3 = ' + str(Time[0]['APER3'][0]) \
-    #                      + ' pix = ' + '{:.1f}'.format(Time[0]['APER3'][0] * 1.85) + '". '
-    # # Target_Report_Txt += 'r4 = ' + str(Time[0]['APER4'][0]) \
-    # #                      + ' pix = ' + '{:.1f}'.format(Time[0]['APER4'][0] * 1.85) + '". '
-    # # Target_Report_Txt += 'pix or ' + '{:.1f}'.format(Time['APER1'][0] * 1.85) + '". '
-    # Target_Report_Txt += '\nDuration of time series is '
-    # Target_Report_Txt += '{:.0f}'.format((Time[0]['JD'][-1] - Time[0]['JD'][0]) * 24 * 60) + 'min. '
-    # Target_Report_Txt += 'and number of frames is ' + str(len(Time[0]['JD'])) + '.\n'
-    # Target_Report_Txt += '\n'
-    # FS = np.argmax(Cat[0]['R'])
-    # Target_Report_Txt += 'Faintest star in FoV is #' + str(Cat[0]['ID'][FS]) + '. It is '
-    # Target_Report_Txt += '{:.1f}'.format(Cat[0]['R'][FS] - Cat[0]['R'][0])
-    # Target_Report_Txt += 'mag(GAIA RP) weaker than the target.\n'
-    # Target_Report_Txt += '\n'
-    # Target_Report_Txt += 'Tag: ' + Time[0]['DATE-OBS'][0].split('T')[0].replace('-', '')
-    # Target_Report_Txt += '_chazov_kourovka0.4_\n'
-    # df = open(Path2Data + '/' + Pref + '_report.txt', 'w')
-    # df.write(Target_Report_Txt)
-    # df.close()
-    #
-    # Target_Note_Txt = Info['Name'][0] + ' at UT'
-    # Target_Note_Txt += Time[0]['DATE-OBS'][0].split('T')[0].replace('-', '')
-    # Target_Note_Txt += ' from ' + 'Kourovka Observatory 0.4m (x2)' + ' in ' + Fil + '.\n'
-    # Target_Note_Txt += 'Photometric aperture radius is ' + '{:.1f}'.format(Time[0]['APER1'][0] * 1.85) + '". \n'
-    # Target_Note_Txt += 'Previous TTF comments: ' + Info['comments'][0] + '\n'
-    # Target_Note_Txt += 'All data has been uploaded to ExoFOP-TESS.\n'
-    # for num in range(len(Flux)):
-    #     Target_Note_Txt += '\nModel for aperture equal to ' + '{:.1f}'.format(
-    #         Time[0]['APER' + str(1 + num)][0]) + 'pix\n'
-    #     f, k_model, a, mid_time, i_model, e, w, ldc1, ldc2, t1, t2, t0, t3 = model_params[num]
-    #     transit = what_transit(Target_Report_Tbl[num]['JD'], T0.jd, T1.jd)
-    #     Target_Note_Txt += 'Chazov Nikita observed' + transit
-    #     if transit == ' a full transit' or transit == ' a full with gapped' or \
-    #             transit == ' an ingress ' or transit == ' a gapped ingress':
-    #         Target_Note_Txt += '.\nTransit surveillance started at ~ ' + (Target_Report_Tbl[0]['DATE-OBS'][t0])
-    #     if transit == ' a full transit' or transit == ' a full with gapped' or \
-    #             transit == ' an egress' or transit == ' a gapped egress':
-    #         Target_Note_Txt += '. Transit surveillance ended at ~ ' + (Target_Report_Tbl[num]['DATE-OBS'][t3])
-    #     Target_Note_Txt += '.\nObserved transit depth is ~ ' + str(round((1 - transit_depth_median[num]) * 1000, 1)) + \
-    #                        'ppt, std = ' + str(round(std_transit_depth[num] * 1000, 1)) + 'ppt'
-    #     Target_Note_Txt += '. Transit depth difference ~ ' + \
-    #                        str(round(abs(Depth - transit_depth_median[num]) * 1000, 1)) + 'ppt'
-    #     Target_Note_Txt += '.\nModel parameters: '
-    #     Target_Note_Txt += '\n*The model is built in the PyTransit ' \
-    #                        'package by the RoadRunner function,  Limb darkening: '
-    #     Target_Note_Txt += model + '. Fitting a model using the scipy package'
-    #     Target_Note_Txt += '\n*Radius ratio (k) = ' + '{:.4f}'.format(k_model)
-    #     Target_Note_Txt += '\n*Limb darkening coefficients (ldc) = [' + '{:.3f}'.format(ldc1) + \
-    #                        ', ' + '{:.3f}'.format(ldc2) + ']'
-    #     Target_Note_Txt += '\n*Transit center in jd (t0) = ' + str(mid_time)
-    #     Target_Note_Txt += '\n*Orbital semi-major axis divided by the stellar radius (a) = ' + '{:.3f}'.format(a)
-    #     Target_Note_Txt += '\n*Orbital inclination (i) = ' + '{:.4f}'.format(i_model) + 'Pi'
-    #     Target_Note_Txt += '\n*Orbital eccentricity (e) = ' + '{:.4f}'.format(e)
-    #     Target_Note_Txt += '\n*Argument of periapsis (w) = ' + '{:.4f}'.format(w) + 'Pi\n'
-    # df = open(Path2Data + '/' + Pref + '_notes.txt', 'w')
-    # df.write(Target_Note_Txt)
-    # df.close()
 
-
-start = time.time()
-do_post_proc(r'D:\docs\sci\tess\good\TIC22951086601\4012\TIC229510866.01_20201211_Kourovka_0.4_V')
-print('time =', time.time() - start)
-# ##bin
-# if BinSize>1:
-#    plt.figure(figsize=(9,5))
-#    Target = Table([Flux[:,0]/Zero_Flux[0], Time['JD']], names=['Flux', 'JD'])
-#    Bin = BinSize*Time['EXPTIME'] / (24*3600.)
-#    jd_bin = np.trunc(Target['JD'] / Bin)
-#    A = Target.group_by(jd_bin)
-#    Target_bin = A.groups.aggregate(np.median)
-#    plt.plot(Target_bin['JD'], Target_bin['Flux'], 'g.', label='x3 binned')
-#    plt.hlines(1.0, locs[0], locs[-1], 'black', alpha=0.5)
-#    plt.hlines(Depth, locs[0], locs[-1], 'red', 'dashed', alpha=0.3)
-#    plt.ylabel('Normalized flux', fontsize=6)
-#    plt.title('Target', fontsize=8)
-#    plt.axvspan(T0.jd, T1.jd, facecolor='k', alpha=0.2)
-#    plt.xticks(locs, x_ticks_labels, rotation='vertical', fontsize=6)
-#    plt.xlabel('Date-Time (UTC), ' + Time['DATE-OBS'][0].split('T')[0], fontsize=6)
-#    plt.tick_params(axis='both', labelsize=6, direction='in')
-#    plt.grid()
-#    plt.show()
-
-
-####
-# df=open('TF8A1859_Master_R.txt', 'w')
-# df.write('HJD' + '\t' + 'Phase' + '\t' + 'Cycle' + '\t' + 'Norm_Flux' + '\t' + 'Error' + '\t' + 'gmag' +
-# '\t' + 'e_gmag' + '\t' + 'Airmass' + '\t' + 'FWHM' + '\t' + 'Sky' + '\t' + 'Exptime' + '\n')
-# for ii in range(0, len(Norm_Flux)):
-#    df.write(format('%.6f' % Time[ii,0]) + '\t' + \
-#             format('%.3f' % Time[ii,1]) + '\t' + \
-#             format('%.3f' % Time[ii,2]) + '\t' + \
-#             format('%.4f' % Norm_Flux[ii]) + '\t' + \
-#             format('%.4f' % Error[ii, 0]) + '\t' + \
-#             format('%.4f' % mmag[ii]) + '\t' + \
-#             format('%.4f' % Error[ii, 0]) + '\t' + \
-#             format('%.2f' % Airmass[ii, 0]) + '\t' + \
-#             format('%.2f' % Airmass[ii, 1]) + '\t' + \
-#             format('%.2f' % Airmass[ii, 2]) + '\t' + \
-#             format('%.1f' % Exptime) + '\n')
-# df.close()
-####
-##
-#  gapped egress/ full with gapped /gapped ingress
+# start = time.time()
+# do_post_proc(r'D:\docs\sci\tess\good\for_cursuch\TIC22951086601\3988\TIC229510866.01_20201118_Kourovka_0.4_V')
+# print('time =', time.time() - start)

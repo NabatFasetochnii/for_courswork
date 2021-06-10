@@ -19,7 +19,7 @@ def create_TTF_entry_url(date_obs, priority, min_depth, max_mag, target):
           '&period=&duration=&target=&show_ephemeris=0' + \
           '&print_html=2&twilight=-12&max_airmass=2.4'
 
-    return (url.format(date_obs, priority, min_depth, max_mag, target))
+    return url.format(date_obs, priority, min_depth, max_mag, target)
 
 
 def TTF_Query(DateObs, priority, min_depth, max_mag, Target):

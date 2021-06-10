@@ -234,5 +234,5 @@ def core(Path2Data, RAper=[4.0, 6.0, 8.0]):
 
 
 start = time.time()
-core(Path2Data=r'D:\docs\sci\tess\good\TIC22951086601\4012\EAST_V')
+core(Path2Data=r'D:\docs\sci\tess\good\for_cursuch\TIC22951086601\3988\WEST_R')
 print('time =', time.time() - start)
