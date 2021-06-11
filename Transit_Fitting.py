@@ -70,9 +70,9 @@ def do_fitting(start_transit, end_transit, model, time, flux, period, depth, fil
     #     print('popt', popt)
     #     b = popt
 
-    popt, pcov = optimize.curve_fit(f, time, flux, p0=[0.05, 3.6, _mid, 0.50, 0.1, 0.49, 0.08, 0.01],
-                                    bounds=[[0.001, 3, start_transit - 0.002, 0.4, 0.0, 0.4, 0, 0],
-                                            [0.07, 4, end_transit + 0.002, 0.6, 0.3, 0.7, 1, 3]])
+    popt, pcov = optimize.curve_fit(f, time, flux, p0=[0.06, 3.6, _mid, 0.50, 0.1, 0.48, 0.7, 0.05],
+                                    bounds=[[0.001, 3, start_transit - 0.002, 0.4, 0.0, 0.4, 0.2, 0.01],
+                                            [0.1, 4, end_transit + 0.002, 0.6, 0.3, 0.7, 1, 1]])
     # popt = []
     # pcov = []
     # print([_k, _a, _mid, _i, _e, _w, _ldc1, _ldc2])
